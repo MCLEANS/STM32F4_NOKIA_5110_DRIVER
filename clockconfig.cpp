@@ -22,7 +22,6 @@ clock_config::~clock_config() {
 
 void clock_config::initialize(){
 	//-------------STSTEM CLOCK CONFIGURATION-------------------------
-
 	//SET FLASH MEMORY LATENCY AND ENABLE PREFETCH
 	FLASH->ACR |= FLASH_ACR_LATENCY_5WS;
 	FLASH->ACR |= FLASH_ACR_PRFTEN;

@@ -126,10 +126,6 @@ class NOKIA_5110 : public _SPI{
         uint8_t RST_PIN;
         GPIO_TypeDef* DC_PORT;
         uint8_t DC_PIN;
-        uint8_t prescaler;
-        bool phase;
-        bool polarity;
-        bool LSBFIRST;
 
     private:
         void reset_pulse();
@@ -158,9 +154,9 @@ class NOKIA_5110 : public _SPI{
                     uint8_t MOSI_PIN,
                     uint8_t MISO_PIN,
                      uint8_t prescaler,
-                    bool phase,
-                    bool polarity,
-                    bool LSBFIRST);
+                    bool phase = false,
+                    bool polarity = false,
+                    bool LSBFIRST = false);
         void send_command(char cmd);
         void send_data(char byte);
         void normal_mode();

@@ -32,17 +32,44 @@ NOKIA_5110::NOKIA_5110(GPIO_TypeDef* CS_PORT,
                                         polarity,
                                         LSBFIRST){
     //SET RESET, CHIP SELECT AND DC PIN DIRECTION (OUTPUT)                 
-    if(*CS_PORT == PORTB) DDRB |= (1 << CS_PIN);
-    if(*CS_PORT == PORTC) DDRC |= (1 << CS_PIN);
-    if(*CS_PORT == PORTD) DDRD |= (1 << CS_PIN);
+    if(CS_PORT == GPIOA) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+    if(CS_PORT == GPIOB) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
+    if(CS_PORT == GPIOC) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN;
+    if(CS_PORT == GPIOD) RCC->AHB1ENR |= RCC_AHB1ENR_GPIODEN;
+    if(CS_PORT == GPIOE) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOEEN;
+    if(CS_PORT == GPIOF) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOFEN;
+    if(CS_PORT == GPIOG) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOGEN;
+    if(CS_PORT == GPIOH) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOHEN;
+    if(CS_PORT == GPIOI) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOIEN;
 
-    if(*RST_PORT == PORTB) DDRB |= (1 << RST_PIN);
-    if(*RST_PORT == PORTC) DDRC |= (1 << RST_PIN);
-    if(*RST_PORT == PORTD) DDRD |= (1 << RST_PIN);
+    if(RST_PORT == GPIOA) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+    if(RST_PORT == GPIOB) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
+    if(RST_PORT == GPIOC) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN;
+    if(RST_PORT == GPIOD) RCC->AHB1ENR |= RCC_AHB1ENR_GPIODEN;
+    if(RST_PORT == GPIOE) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOEEN;
+    if(RST_PORT == GPIOF) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOFEN;
+    if(RST_PORT == GPIOG) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOGEN;
+    if(RST_PORT == GPIOH) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOHEN;
+    if(RST_PORT == GPIOI) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOIEN;
 
-    if(*DC_PORT == PORTB) DDRB |= (1 << DC_PIN);
-    if(*DC_PORT == PORTC) DDRC |= (1 << DC_PIN);
-    if(*DC_PORT == PORTD) DDRD |= (1 << DC_PIN);
+    if(DC_PORT == GPIOA) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOAEN;
+    if(DC_PORT == GPIOB) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOBEN;
+    if(DC_PORT == GPIOC) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOCEN;
+    if(DC_PORT == GPIOD) RCC->AHB1ENR |= RCC_AHB1ENR_GPIODEN;
+    if(DC_PORT == GPIOE) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOEEN;
+    if(DC_PORT == GPIOF) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOFEN;
+    if(DC_PORT == GPIOG) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOGEN;
+    if(DC_PORT == GPIOH) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOHEN;
+    if(DC_PORT == GPIOI) RCC->AHB1ENR |= RCC_AHB1ENR_GPIOIEN;
+
+    CS_PORT->MODER |= (1 << (CS_PIN*2));
+    CS_PORT->MODER &= ~(1 << ((CS_PIN*2)+1));
+
+    RST_PORT->MODER |= (1 << (RST_PIN*2));
+    RST_PORT->MODER &= ~(1 << ((RST_PIN*2)+1));
+
+    DC_PORT->MODER |= (1 << (DC_PIN*2));
+    DC_PORT->MODER &= ~(1 << ((DC_PIN*2)+1));
 
     //SET CHIP SELECT, RESET AND DS PINS HIGH
     set_cs_pin();
@@ -62,30 +89,30 @@ NOKIA_5110::NOKIA_5110(GPIO_TypeDef* CS_PORT,
 }
 
 void NOKIA_5110::set_cs_pin(){
-    *CS_PORT |= (1 << CS_PIN);
+    CS_PORT->ODR |= (1 << CS_PIN);
 }
 
 void NOKIA_5110::reset_cs_pin(){
-    *CS_PORT &= ~(1 << CS_PIN);
+    CS_PORT->ODR &= ~(1 << CS_PIN);
 }
 
 void NOKIA_5110::set_rst_pin(){
-    *RST_PORT |= (1 << RST_PIN);
+    RST_PORT->ODR |= (1 << RST_PIN);
 }
 void NOKIA_5110::reset_rst_pin(){
-    *RST_PORT &= ~(1 << RST_PIN);
+    RST_PORT->ODR &= ~(1 << RST_PIN);
 }
 void NOKIA_5110::set_dc_pin(){
-    *DC_PORT |= (1 << DC_PIN);
+    DC_PORT->ODR |= (1 << DC_PIN);
 
 }
 void NOKIA_5110::reset_dc_pin(){
-    *DC_PORT &= ~(1 << DC_PIN);
+    DC_PORT->ODR &= ~(1 << DC_PIN);
 }
 
 void NOKIA_5110::reset_pulse(){
     reset_rst_pin();
-    _delay_us(1);
+    for(volatile int i = 0; i < 1000000; i++){}
     set_rst_pin();
 }
 
