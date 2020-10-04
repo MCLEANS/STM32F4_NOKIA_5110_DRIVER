@@ -142,21 +142,21 @@ class NOKIA_5110 : public _SPI{
 
     public:
     public:
-        NOKIA_5110(GPIO_TypeDef* CS_PORT,
-                    uint8_t CS_PIN,
-                    GPIO_TypeDef* RST_PORT,
-                    uint8_t RST_PIN,
-                    GPIO_TypeDef* DC_PORT,
-                    uint8_t DC_PIN,
-                    SPI_TypeDef *SPI,
+        NOKIA_5110(SPI_TypeDef *SPI,
                     GPIO_TypeDef *GPIO,
                     uint8_t SCK_PIN,
                     uint8_t MOSI_PIN,
                     uint8_t MISO_PIN,
-                     uint8_t prescaler,
-                    bool phase = false,
-                    bool polarity = false,
-                    bool LSBFIRST = false);
+                    uint8_t prescaler,
+                    bool phase,
+                    bool polarity,
+                    bool _LSBFIRST,
+                    GPIO_TypeDef* CS_PORT,
+                    uint8_t CS_PIN,
+                    GPIO_TypeDef* RST_PORT,
+                    uint8_t RST_PIN,
+                    GPIO_TypeDef* DC_PORT,
+                    uint8_t DC_PIN);
         void send_command(char cmd);
         void send_data(char byte);
         void normal_mode();

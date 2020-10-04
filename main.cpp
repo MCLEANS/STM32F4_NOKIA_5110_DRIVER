@@ -11,22 +11,26 @@
 #define DC_PIN 2
 
 custom_libraries::clock_config system_clock;
-custom_libraries::NOKIA_5110 NOKIA(CS_PORT,
-                                    CS_PIN,
-                                    RST_PORT,
-                                    RST_PIN,
-                                    DC_PORT,
-                                    DC_PIN,
-                                    SPI1,
+custom_libraries::NOKIA_5110 NOKIA(SPI1,
                                     GPIOA,
                                     5,
                                     7,
                                     6,
-                                    64);
+                                    64,
+                                    false,
+                                    false,
+                                    false,
+                                    CS_PORT,
+                                    CS_PIN,
+                                    RST_PORT,
+                                    RST_PIN,
+                                    DC_PORT,
+                                    DC_PIN);
 
 int main(void) {
   
   system_clock.initialize();
+  NOKIA.inverted_mode();
 
   int second = 0;
 	int minute = 10;
