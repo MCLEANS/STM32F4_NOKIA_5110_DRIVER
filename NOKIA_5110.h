@@ -1,22 +1,7 @@
 #ifndef _NOKIA_5110_H
 #define _NOKIA_5110_H
 
-#include <avr/io.h>
-#include <util/delay.h>
 #include "SPI.h"
-/*
-#define CS_DIRECTION DDRB
-#define CS_PORT PORTB
-#define CS_PIN 2
-
-#define DC_DIRECTION DDRD
-#define DC_PORT PORTD
-#define DC_PIN 7
-
-#define RESET_DIRECTION DDRB
-#define RESET_PORT PORTB
-#define RESET_PIN 1 */
-
 
 #define FUNCTION_SET 0b00100000
 #define EXTENDED_INSTRUCTION (FUNCTION_SET | (1 << 0))
@@ -133,13 +118,13 @@ static const char ASCII[][5] =
 
 namespace custom_libraries{
 
-class NOKIA_5110 : public SPI{
+class NOKIA_5110 : public _SPI{
     private:
-        volatile uint8_t* CS_PORT;
+        GPIO_TypeDef* CS_PORT;
         uint8_t CS_PIN;
-        volatile uint8_t* RST_PORT;
+        GPIO_TypeDef* RST_PORT;
         uint8_t RST_PIN;
-        volatile uint8_t* DC_PORT;
+        GPIO_TypeDef* DC_PORT;
         uint8_t DC_PIN;
         uint8_t prescaler;
         bool phase;
