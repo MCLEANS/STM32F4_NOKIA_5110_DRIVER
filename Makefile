@@ -3,7 +3,8 @@
 #CXX SOURCE_FILES
 CXX_SOURCES = main.cpp
 CXX_SOURCES += clockconfig.cpp
-Cxx_SOURCES += SPI.cpp
+CXX_SOURCES += SPI.cpp
+CXX_SOURCES += NOKIA_5110.cpp
 
 #C SOURCE FILES
 #SOURCES  = main.c
