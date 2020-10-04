@@ -146,13 +146,18 @@ class NOKIA_5110 : public _SPI{
 
     public:
     public:
-        NOKIA_5110(volatile uint8_t* CS_PORT,
+        NOKIA_5110(GPIO_TypeDef* CS_PORT,
                     uint8_t CS_PIN,
-                    volatile uint8_t* RST_PORT,
+                    GPIO_TypeDef* RST_PORT,
                     uint8_t RST_PIN,
-                    volatile uint8_t* DC_PORT,
+                    GPIO_TypeDef* DC_PORT,
                     uint8_t DC_PIN,
-                    uint8_t prescaler,
+                    SPI_TypeDef *SPI,
+                    GPIO_TypeDef *GPIO,
+                    uint8_t SCK_PIN,
+                    uint8_t MOSI_PIN,
+                    uint8_t MISO_PIN,
+                     uint8_t prescaler,
                     bool phase,
                     bool polarity,
                     bool LSBFIRST);
